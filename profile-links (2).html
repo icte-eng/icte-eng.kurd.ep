@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Links</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cyan: #00f5ff;
+    --green: #00ff88;
+    --blue: #0066ff;
+    --dark: #050a0f;
+    --darker: #020508;
+    --grid: rgba(0,245,255,0.04);
+    --glow: 0 0 20px rgba(0,245,255,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    animation: gridPulse 6s ease-in-out infinite;
+  }
+
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* Scan line effect */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    animation: scanLine 5s linear infinite;
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  @keyframes scanLine {
+    0% { top: -2px; }
+    100% { top: 100vh; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  /* Profile section */
+  .profile {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.8s ease forwards;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .avatar-ring {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+
+  .avatar-ring::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(var(--cyan), var(--blue), var(--green), var(--cyan));
+    animation: rotateBorder 3s linear infinite;
+  }
+
+  @keyframes rotateBorder {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .avatar-inner {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .avatar-icon {
+    font-size: 48px;
+    filter: drop-shadow(0 0 10px var(--cyan));
+  }
+
+  .name {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px var(--cyan), 0 0 40px rgba(0,245,255,0.3);
+    margin-bottom: 10px;
+  }
+
+  .title-tag {
+    display: inline-block;
+    background: rgba(0,245,255,0.08);
+    border: 1px solid rgba(0,245,255,0.3);
+    color: var(--cyan);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .bio {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    line-height: 1.6;
+    font-family: 'Share Tech Mono', monospace;
+    margin-top: 10px;
+  }
+
+  .bio span {
+    color: var(--green);
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 28px 0;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.4), transparent);
+  }
+
+  .divider-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: var(--glow);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Links */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: slideIn 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .link-card:nth-child(1) { animation-delay: 0.1s; }
+  .link-card:nth-child(2) { animation-delay: 0.2s; }
+  .link-card:nth-child(3) { animation-delay: 0.3s; }
+  .link-card:nth-child(4) { animation-delay: 0.4s; }
+  .link-card:nth-child(5) { animation-delay: 0.5s; }
+  .link-card:nth-child(6) { animation-delay: 0.6s; }
+  .link-card:nth-child(7) { animation-delay: 0.7s; }
+  .link-card:nth-child(8) { animation-delay: 0.8s; }
+  .link-card:nth-child(9) { animation-delay: 0.9s; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Hover glow sweep */
+  .link-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.06), transparent);
+    transition: left 0.4s ease;
+  }
+
+  .link-card:hover::before { left: 100%; }
+
+  .link-card:hover {
+    background: rgba(0,245,255,0.05);
+    border-color: rgba(0,245,255,0.35);
+    transform: translateX(-4px);
+    box-shadow: 4px 0 0 0 var(--cyan), 0 0 20px rgba(0,245,255,0.1);
+  }
+
+  .link-card:hover .link-label {
+    color: var(--cyan);
+    text-shadow: 0 0 10px rgba(0,245,255,0.5);
+  }
+
+  .icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link-info { flex: 1; }
+
+  .link-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+    display: block;
+  }
+
+  .link-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    display: block;
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  .arrow {
+    font-size: 18px;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.3s, transform 0.3s;
+  }
+
+  .link-card:hover .arrow {
+    color: var(--cyan);
+    transform: translateX(-4px);
+  }
+
+  /* Platform colors */
+  .fb-personal .icon-box { background: rgba(24,119,242,0.15); }
+  .fb-group .icon-box { background: rgba(24,119,242,0.1); }
+  .tiktok .icon-box { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,0,80,0.2); }
+  .gmail .icon-box { background: rgba(234,67,53,0.12); }
+  .instagram .icon-box { background: rgba(193,53,132,0.12); }
+  .snapchat .icon-box { background: rgba(255,252,0,0.1); }
+  .telegram .icon-box { background: rgba(0,136,204,0.12); }
+  .viber .icon-box { background: rgba(115,76,158,0.15); }
+  .whatsapp .icon-box { background: rgba(37,211,102,0.1); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: rgba(0,245,255,0.25);
+    letter-spacing: 3px;
+    animation: fadeIn 1s ease 1s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+    box-shadow: 0 0 8px var(--green);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  /* Floating particles */
+  .particle {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: var(--cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: floatUp linear infinite;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(100vh) scale(0); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.2; }
+    100% { opacity: 0; transform: translateY(-20px) scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particle" style="left:10%; animation-duration:8s; animation-delay:0s;"></div>
+<div class="particle" style="left:25%; animation-duration:12s; animation-delay:2s; background:#00ff88;"></div>
+<div class="particle" style="left:50%; animation-duration:9s; animation-delay:4s;"></div>
+<div class="particle" style="left:70%; animation-duration:11s; animation-delay:1s; background:#0066ff;"></div>
+<div class="particle" style="left:85%; animation-duration:7s; animation-delay:3s; background:#00ff88;"></div>
+<div class="particle" style="left:40%; animation-duration:10s; animation-delay:5s;"></div>
+
+<div class="container">
+
+  <!-- Profile -->
+  <div class="profile">
+    <div class="avatar-ring">
+      <div class="avatar-inner">
+        <span class="avatar-icon">💻</span>
+      </div>
+    </div>
+    <div class="name">Muhamad Dldar</div>
+    <div class="title-tag">COMPUTER ENGINEERING STUDENT</div>
+    <p class="bio">
+      Computer Engineering Student<br>
+      Information Technology and Communication Engineering ICTE
+    </p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- Links -->
+  <div class="links">
+
+    <a href="https://www.facebook.com/share/1A3JpzPURz/" class="link-card fb-personal" target="_blank">
+      <div class="icon-box" style="background:rgba(24,119,242,0.15);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 3a3 3 0 1 1-3 3 3 3 0 0 1 3-3zm0 14.2a7.2 7.2 0 0 1-6-3.22c.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08a7.2 7.2 0 0 1-6 3.22z"/>
+        </svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">Facebook</span>
+        <span class="link-sub">PERSONAL PROFILE</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="https://www.facebook.com/groups/icte.facebook/?ref=share&mibextid=NSMWBT" class="link-card fb-group" target="_blank">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">Facebook Group</span>
+        <span class="link-sub">FACEBOOK GROUP</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="https://www.instagram.com/muhammad_dldar26?igsh=MTVtb3plOWMybzB2aQ==" class="link-card instagram" target="_blank">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="url(#ig)"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F58529"/><stop offset="50%" stop-color="#DD2A7B"/><stop offset="100%" stop-color="#515BD4"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">Instagram</span>
+        <span class="link-sub">INSTAGRAM</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="https://www.snapchat.com/add/hama_madride25?share_id=ccK1wRSQPzM&locale=en-GB" class="link-card snapchat" target="_blank">
+      <div class="icon-box" style="background:#FFFC00; border-radius:12px;">
+        <svg width="26" height="26" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path fill="white" stroke="black" stroke-width="4"
+            d="M50 8
+               C34 8 24 18 24 31
+               C24 35 24.5 38.5 24.5 38.5
+               C22 38 19 36.5 17 36.5
+               C14.5 36.5 13 38 13 39.5
+               C13 41.5 15 42.5 17 43.5
+               C20 45 22 46 22.5 48
+               C23 50 22 52 20 55
+               C16 61 10 64 8 66
+               C7 67 7.5 68.5 9 69
+               C14 71 20 71.5 22 73
+               C23 74 23.5 76 24.5 78
+               C25.5 80 27 80.5 29 80
+               C31 79.5 33.5 78.5 36 79
+               C39 79.5 41.5 82 46 84.5
+               C47.5 85.5 49 86 50 86
+               C51 86 52.5 85.5 54 84.5
+               C58.5 82 61 79.5 64 79
+               C66.5 78.5 69 79.5 71 80
+               C73 80.5 74.5 80 75.5 78
+               C76.5 76 77 74 78 73
+               C80 71.5 86 71 91 69
+               C92.5 68.5 93 67 92 66
+               C90 64 84 61 80 55
+               C78 52 77 50 77.5 48
+               C78 46 80 45 83 43.5
+               C85 42.5 87 41.5 87 39.5
+               C87 38 85.5 36.5 83 36.5
+               C81 36.5 78 38 75.5 38.5
+               C75.5 38.5 76 35 76 31
+               C76 18 66 8 50 8Z"/>
+        </svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">Snapchat</span>
+        <span class="link-sub">SNAPCHAT</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="https://www.tiktok.com/@hama.teach?_r=1&_t=ZS-94YJbG0xMiW" class="link-card tiktok" target="_blank">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.77 1.52V6.73a4.85 4.85 0 01-1-.04z"/></svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">TikTok 1</span>
+        <span class="link-sub">TIKTOK — ACCOUNT 1</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="https://www.tiktok.com/@tech..zone01?_r=1&_t=ZS-94YJct70Lbu" class="link-card tiktok" target="_blank">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.77 1.52V6.73a4.85 4.85 0 01-1-.04z"/></svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">TikTok 2</span>
+        <span class="link-sub">TIKTOK — ACCOUNT 2</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="https://t.me/Muhamad_dldar" class="link-card telegram" target="_blank">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#2CA5E0"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">Telegram</span>
+        <span class="link-sub">TELEGRAM</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="https://wa.me/9647507016523" class="link-card whatsapp" target="_blank">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">WhatsApp</span>
+        <span class="link-sub">WHATSAPP</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="viber://chat?number=9647507016523" class="link-card viber" target="_blank">
+      <div class="icon-box" style="background:#7360f2; border-radius:12px;">
+        <svg width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- speech bubble -->
+          <path d="M24 4C13.5 4 5 11.6 5 21c0 5.4 2.8 10.2 7.2 13.4l-1.5 6.8 7.2-3.6C19.8 38.5 21.9 39 24 39c10.5 0 19-7.6 19-18S34.5 4 24 4z" fill="white"/>
+          <!-- phone handset -->
+          <path d="M30.5 26.5c-.7-.7-1.6-.7-2.3 0l-1.4 1.4c-.3.3-.7.3-1 .1-1.2-.8-2.3-1.8-3.3-2.8-1-1-2-2.1-2.8-3.3-.2-.3-.2-.7.1-1l1.4-1.4c.7-.7.7-1.6 0-2.3l-2.5-2.5c-.7-.7-1.6-.7-2.3 0l-1 1c-1.3 1.3-1.5 3.3-.5 4.9 1.1 1.8 2.5 3.5 4.1 5.1 1.6 1.6 3.3 3 5.1 4.1 1.6 1 3.6.8 4.9-.5l1-1c.7-.7.7-1.6 0-2.3l-2.5-2.5z" fill="#7360f2"/>
+          <!-- signal arcs -->
+          <path d="M27 16.5a6 6 0 0 1 4.5 4.5M27 13a9.5 9.5 0 0 1 8 8" stroke="#7360f2" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">Viber</span>
+        <span class="link-sub">VIBER</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+    <a href="mailto:muhamaddldar25@gmail.com" class="link-card gmail" target="_blank">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#EA4335"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+      </div>
+      <div class="link-info">
+        <span class="link-label">Gmail</span>
+        <span class="link-sub">EMAIL — GMAIL</span>
+      </div>
+      <span class="arrow">←</span>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    ONLINE <span class="status-dot"></span> &nbsp;|&nbsp; COMPUT
